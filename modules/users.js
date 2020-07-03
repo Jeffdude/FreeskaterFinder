@@ -1,13 +1,18 @@
 import { firebase } from './firebase.js';
+import { loadUser } from '../redux/actions.js';
 
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    console.log("User " + user.displayName + " signed in!");
-  } else {
-    console.log("User is signed out.");
-  }
-});
+export function initUserListener(store){
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("User", user.uid, "with email", user.email, "signed in!");
+      store.dispatch(loadUser(user.displayName, user.email, user.uid));
+    } else {
+      console.log("User is signed out.");
+      store.dispatch(clearUser());
+    }
+  });
+}
 
 
 /**
@@ -23,24 +28,24 @@ export function createUser(email, password) {
     var errorMessage = error.message;
     switch(errorCode) {
       case 'auth/email-already-in-use':
-        console.error(errorMessage);
+        console.error("[Create Account Error] ", errorMessage);
         return({success: false, message: errorMessage});
       case 'auth/invalid-email':
-        console.error(errorMessage);
+        console.error("[Create Account Error] ", errorMessage);
         return({success: false, message: errorMessage});
       case 'auth/operation-not-allowed':
-        console.error(errorMessage);
+        console.error("[Create Account Error] ", errorMessage);
         return({success: false, message: errorMessage});
       case 'auth/weak-password':
-        console.error(errorMessage);
+        console.error("[Create Account Error] ", errorMessage);
         return({success: false, message: errorMessage});
+      default:
+        console.error("[Create Account Error] ", errorMessage);
+        return({success: false, message: errorMessage});
+
     }
   });
-  if (auth.currentUser !== null) {
-    return({success: true, message: null});
-  } else {
-    return({success: false, message: 'An unkown error occurred.'});
-  }
+  return({success: true, message: null});
 }
 
 /**
@@ -57,24 +62,24 @@ export function signInUser(email, password) {
       var errorMessage = error.message;
       switch(errorCode) {
         case 'auth/invalid-email':
-          console.error(errorMessage);
+          console.error("[Sign In Error] ", errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/user-disabled':
-          console.error(errorMessage);
+          console.error("[Sign In Error] ", errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/user-not-found':
-          console.error(errorMessage);
+          console.error("[Sign In Error] ", errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/wrong-password':
-          console.error(errorMessage);
+          console.error("[Sign In Error] ", errorMessage);
+          return({success: false, message: errorMessage});
+        default:
+          console.error("[Sign In Error] ", errorMessage);
           return({success: false, message: errorMessage});
       }
-  });
-  if (auth.currentUser !== null) {
-    return({success: true, message: null});
-  } else {
-    return({success: false, message: 'An unkown error occurred.'});
-  }
+    }
+  );
+  return({success: true, message: null});
 }
 
 
@@ -108,22 +113,6 @@ export function sendPasswordReset(email) {
     }
     console.log(error);
   });
-}
-
-/**
- * @return {Boolean} a user is logged in
- */
-export function userLoggedIn() {
-  return Boolean(firebase.auth().currentUser);
-}
-
-
-/**
- * @return {firebase.User}
- *  current user
- */
-export function getUser() {
-  return firebase.auth().currentUser;
 }
 
 /**

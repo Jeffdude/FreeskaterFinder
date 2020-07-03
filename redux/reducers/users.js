@@ -8,9 +8,9 @@ const initialState = {
   allUIDs: [],
 }
 
-function getNextUID(all_used){
-  candidate = Math.floor(Math.random()*90000) + 10000;
-  if all_used.includes(candidate) {
+function getNextUID( all_used ){
+  let candidate = Math.floor(Math.random()*90000) + 10000;
+  if (all_used.includes(candidate)) {
     return getNextUID(all_used);
   } else {
     return candidate;
@@ -19,13 +19,13 @@ function getNextUID(all_used){
 
 export default function(state = initialState, action){
   switch(action.type) {
-    case CREATE_USER:
+    case CREATE_USER: {
       const { email, password } = action.payload;
-      result = createUser(email, password);
+      let result = createUser(email, password);
       if(result.success){
-        { user_location, user_privacy_status } = action.payload; 
-        newUID = getNextUID(state.allUIDs);
-        return(
+        let { user_location, user_privacy_status } = action.payload; 
+        let newUID = getNextUID(state.allUIDs);
+        return({
           byUID: {
             ...state.byUID,
             newUID: {
@@ -39,10 +39,11 @@ export default function(state = initialState, action){
             actual_location: newUID,
           },
           allUIDs: [...state.allUIDs, newUID],
-        );
+        });
       } else {
-        // Failure case
+        return state;
       }
+    }
     default:
       return state;
   }

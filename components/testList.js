@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 
 function _TestListList({ test_list }) {
   let jsx_test_list = test_list.map(
-    (val) => {
-      return <Text>{ val }, </Text>
+    ({ value }, index) => {
+      return <Text key={index}>{ value }, </Text>
     }
   );
-  console.log(test_list);
+  console.log("Test list:", test_list);
   return (
     <View style={{height:100, flexDirection: 'row'}}>
       { test_list.length ? jsx_test_list : <Text style={{color: "#ff0000"}}> No elements! </Text>}

@@ -1,20 +1,19 @@
+import { syncTestList } from '../redux/actions.js';
+import { testListSelector } from '../redux/selectors.js';
+
+
 import firebaseConfig from '../secure/firebase_config.js';
 
 export var firebase = require('firebase');
 require('firebase/auth');
 //
-//export var firebaseui = require('firebaseui');
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Initialize the FirebaseUI Widget using Firebase.
-//var ui = new firebaseui.auth.AuthUI(firebase.auth());
+const db = firebase.database();
 
-//ui.start('#firebaseui-auth-container', {
-//  signInOptions: [
-//    firebase.auth.EmailAuthProvider.PROVIDER_ID
-//  ],
-//});
+const testlist_path = '/testlist';
 
-
+function pushToDB(db_path, store_selector){
+  
+}
