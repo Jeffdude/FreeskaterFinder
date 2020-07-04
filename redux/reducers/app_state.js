@@ -1,8 +1,9 @@
 import {
   SELECT_NAVIGATION_TAB,
-  SET_FORM_STATE,
+  SET_COMPONENT_STATE,
   LOAD_USER,
   CLEAR_USER,
+  SET_WINDOW_DIMENSIONS,
 } from "../actionTypes.js";
 import { NAVIGATION_TABS } from "../../constants.js";
 
@@ -18,7 +19,8 @@ const initialState = {
   current_user: {
     userLoggedIn: false,
     currentUser: {},
-  }
+  },
+  window_state: {},
 }
 
 /*
@@ -26,15 +28,29 @@ const initialState = {
  */
 function reduce_component_state(state, action){
   switch(action.type){
-    case SET_FORM_STATE: {
-      const { form_name, field_name, value } = action.payload;
+    case SET_COMPONENT_STATE: {
+      const { category_name, component_name, component_state } = action.payload;
       return {
         ...state,
-        [form_name]: {
-          ...state[form_name],
-          [field_name]: value
+        [category_name]: {
+          ...state[category_name],
+          [component_name]: component_state,
         },
       };
+    }
+    default:
+      return state;
+  }
+}
+
+/*
+ * handles states under app_state.window_state
+ */
+function reduce_window_state(state, action){
+  switch(action.type){
+    case SET_WINDOW_DIMENSIONS:  {
+      const window_dimensions = action.payload; //width, height
+      return { ...state, ...window_dimensions };
     }
     default:
       return state;
@@ -88,5 +104,6 @@ export default function(state = initialState, action){
     navigation_state: reduce_navigation_state(state.navigation_state, action),
     component_state: reduce_component_state(state.component_state, action),
     current_user: reduce_current_user_state(state.current_user, action),
+    window_state: reduce_window_state(state.window_state, action),
   }
 }

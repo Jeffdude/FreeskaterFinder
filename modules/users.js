@@ -1,5 +1,5 @@
 import { firebase } from './firebase.js';
-import { loadUser } from '../redux/actions.js';
+import { loadUser, clearUser } from '../redux/actions.js';
 
 
 export function initUserListener(store){
@@ -21,30 +21,33 @@ export function initUserListener(store){
  *
  * @return {success: {bool}, message: {string}}
  */
-export function createUser(email, password) {
-  const auth = firebase.auth();
-  auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    switch(errorCode) {
-      case 'auth/email-already-in-use':
-        console.error("[Create Account Error] ", errorMessage);
-        return({success: false, message: errorMessage});
-      case 'auth/invalid-email':
-        console.error("[Create Account Error] ", errorMessage);
-        return({success: false, message: errorMessage});
-      case 'auth/operation-not-allowed':
-        console.error("[Create Account Error] ", errorMessage);
-        return({success: false, message: errorMessage});
-      case 'auth/weak-password':
-        console.error("[Create Account Error] ", errorMessage);
-        return({success: false, message: errorMessage});
-      default:
-        console.error("[Create Account Error] ", errorMessage);
-        return({success: false, message: errorMessage});
-
-    }
-  });
+export function createUser(email, password, username) {
+  firebase.auth().createUserWithEmailAndPassword(email, password).then(
+    function(result) {
+      result.user.updateProfile({
+        displayName: username,
+      })
+    }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      switch(errorCode) {
+        case 'auth/email-already-in-use':
+          console.error("[Create Account Error] ", errorMessage);
+          return({success: false, message: errorMessage});
+        case 'auth/invalid-email':
+          console.error("[Create Account Error] ", errorMessage);
+          return({success: false, message: errorMessage});
+        case 'auth/operation-not-allowed':
+          console.error("[Create Account Error] ", errorMessage);
+          return({success: false, message: errorMessage});
+        case 'auth/weak-password':
+          console.error("[Create Account Error] ", errorMessage);
+          return({success: false, message: errorMessage});
+        default:
+          console.error("[Create Account Error] ", errorMessage);
+          return({success: false, message: errorMessage});
+      }
+    });
   return({success: true, message: null});
 }
 

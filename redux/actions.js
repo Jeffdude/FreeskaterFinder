@@ -3,10 +3,11 @@ import {
   CLEAR_TEST_LIST,
   SELECT_NAVIGATION_TAB,
   SYNC_TEST_LIST,
-  SET_FORM_STATE,
+  SET_COMPONENT_STATE,
   CREATE_USER,
   LOAD_USER,
   CLEAR_USER,
+  SET_WINDOW_DIMENSIONS,
 } from "./actionTypes.js";
 
 export const selectNavigationTab = navigation_tab => ({
@@ -14,9 +15,13 @@ export const selectNavigationTab = navigation_tab => ({
   payload: { navigation_tab },
 });
 
-export const setFormState = (form_name, field_name, value) => ({
-  type: SET_FORM_STATE,
-  payload: { form_name: form_name, field_name: field_name, value: value },
+export const setComponentState = (category_name, component_name, component_state) => ({
+  type: SET_COMPONENT_STATE,
+  payload: {
+    category_name: category_name,
+    component_name: component_name,
+    component_state: component_state,
+  },
 });
 
 export const loadUser = (username, email, uid) => ({
@@ -26,6 +31,11 @@ export const loadUser = (username, email, uid) => ({
 
 export const clearUser = () => ({
   type: CLEAR_USER,
+});
+
+export const setWindowDimensions = (width, height) => ({
+  type: SET_WINDOW_DIMENSIONS,
+  payload: {width: width, height: height},
 });
 
 

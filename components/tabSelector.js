@@ -3,7 +3,7 @@ import { Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { selectNavigationTab } from '../redux/actions.js';
 import { NAVIGATION_TABS } from '../constants.js'
-import { navigationStateSelector } from '../redux/selectors.js';
+import { navigationSelector } from '../redux/selectors.js';
 import PropTypes from 'prop-types';
 
 function _TabSelector({ selectNavigationTab }){
@@ -44,6 +44,6 @@ function _TabDisplay(props) {
 _TabDisplay.propTypes = {
 }
 export const TabDisplay = connect(
-  state => ({ navigation_tab: navigationStateSelector(state).activeTab }),
+  state => ({ navigation_tab: navigationSelector(state).activeTab }),
 )(_TabDisplay);
 

@@ -1,6 +1,7 @@
 // Navigation + UI
 export const SELECT_NAVIGATION_TAB = 'SELECT_NAVIGATION_TAB';
-export const SET_FORM_STATE = 'SET_FORM_STATE';
+export const SET_COMPONENT_STATE = 'SET_COMPONENT_STATE';
+export const SET_WINDOW_DIMENSIONS = 'SET_WINDOW_DIMENSIONS';
 
 // Users + User Preferences
 export const CREATE_USER = 'CREATE_USER';
