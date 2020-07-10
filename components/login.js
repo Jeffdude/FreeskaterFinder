@@ -1,99 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, TextInput, View, Alert } from 'react-native';
 import { getUser, createUser, signInUser, userLoggedIn } from '../modules/users.js';
 import { Input } from 'react-native-elements';
 import { getStyles } from './stylesheet.js';
 import { connect } from 'react-redux';
 import { setComponentState } from '../redux/actions.js';
-import { GenGenericInput } from '../modules/components.js';
 import { 
   componentSelector,
-  userSelector,
+  currentUserSelector,
   windowSelector,
 } from '../redux/selectors.js';
+import { CreateAccountForm } from './create_account_form.js';
+import { LoginAccountForm } from './login_form.js';
+import * as helpers from '../modules/helpers.js';
 
-function _CreateAccountForm({
-  userIsCreatingAccount,
-  window_dimensions,
-}) {
-  const styles = getStyles(window_dimensions);
-  const UsernameInput = GenGenericInput("login.username")
-
-  return (
-    <View>
-      <UsernameInput
-        placeholder="   Username"
-        leftIcon={{ type: 'fontisto', name: 'person' }}
-      />
-    {/*
-      <Input
-        placeholder="   Email"
-        leftIcon={{ type: 'fontisto', name: 'email' }}
-        onChangeText={changeText("email", email_state)}
-        value={email_state.text}
-        ref={email_state.ref}
-      />
-      <Input
-        placeholder="   Password"
-        leftIcon={{ type: 'fontisto', name: 'locked' }}
-        onChangeText={changeText("password", pw_state)}
-        value={pw_state.text}
-        ref={pw_state.ref}
-        secureTextEntry={true}
-      />
-      { userIsCreatingAccount ? 
-        <Input
-          placeholder="   Confirm Password"
-          leftIcon={{ type: 'fontisto', name: 'locked' }}
-          onChangeText={(text) => setComponentState("login", "password_copy", text)}
-          value={pw_copy_value}
-          secureTextEntry={true}
-          ref={password_copy_ref}
-        />
-        : null
-      }
-      */}
-    </View>
-  );
-}
-_CreateAccountForm.propTypes = {
-  userIsCreatingAccount: PropTypes.bool.isRequired,
-  window_dimensions: PropTypes.object.isRequired,
-};
-
-const CreateAccountForm = connect(
-  state => ({ 
-    userIsCreatingAccount: componentSelector(state).login.userIsCreatingAccount,
-    window_dimensions: windowSelector(state),
-  }),
-)(_CreateAccountForm);
-
-function LoginButton({ doSignInUser }) {
-  return (
-    <Button
-      onPress={doSignInUser}
-      title="Log In"
-      color="#00a0db"
-    />
-  );
-}
-LoginButton.propTypes = {
-  doSignInUser: PropTypes.func.isRequired,
-}
-
-function CreateAccountButton({ doCreateAccount }) {
-  return (
-    <Button
-      onPress={doCreateAccount}
-      title="Create Account"
-      color="#00a0db"
-    />
-  );
-}
-CreateAccountButton.propTypes = {
-  doCreateAccount: PropTypes.func.isRequired,
-}
 
 function _SignInOrCreateAccountToggle({ userIsCreatingAccount, setComponentState, styles}){
   return (
@@ -122,23 +43,30 @@ const SignInOrCreateAccountToggle = connect(
 function _LoginPrompt({ 
   userIsCreatingAccount,
   username,
-  /*
-  email,
-  password,
-  password_copy,
-  */
   userLoggedIn,
   window_dimensions,
 }){
   const styles = getStyles(window_dimensions);
 
-  function _doCreateAccount() {
-    console.log("Create Account: Email: ", email, " Password: ", password);
-    if (password != password_copy) {
-      console.error("PASSWORDS DO NOT MATCH", password, password_copy);
+  if(userLoggedIn){
+    return null;
+  }
+
+  function submitCreateAccount(
+    { username, email, password, password_copy },
+    { setSubmitting },
+  ) {
+    console.log(
+      "Creating Account with email:", email,
+      "Password:", password.replace(/./g, '*')
+    );
+    if (password !== password_copy) {
+      console.log("PASSWORDS DO NOT MATCH", password, password_copy);
+      helpers.createAlert("Passwords do not match.");
+      setSubmitting(false);
       return;
     }
-    const {success, message} = createUser(email, password, username.text)
+    const {success, message} = createUser(email, password, username, createAlert)
     if (success) {
       console.log("User successfully created!")
     } else {
@@ -146,8 +74,8 @@ function _LoginPrompt({
     }
   }
 
-  function _doSignInUser() {
-    console.log("Sign In: Email: ", email, " Password: ", password);
+  function submitLogin({ email, password }) {
+    console.log("Signing user in with email: ", email);
     const {success, message} = signInUser(email, password)
     if (success) {
       console.log("[Sign In User] User successfully logged in");
@@ -156,30 +84,39 @@ function _LoginPrompt({
     }
   }
 
-  if(userLoggedIn){
-    return null;
+  function headerText() {
+    return (
+      <View style={styles.loginHeaderTextView}>
+        <Text style={styles.loginTextHeading}>
+          {userIsCreatingAccount
+            ? "Create An Account"
+            : "Log In"
+          } To Find Freeskaters Near You!
+        </Text>
+      </View>
+    );
+  }
+
+  function subText() {
+    return (
+      <View style={styles.loginSubTextView}>
+        <Text style={styles.loginTextSub}>
+          This app uses secure Firebase authorization,
+          and we will never share your information elsewhere.
+        {"\n".repeat(2)}
+        </Text>
+      </View>
+    );
   }
 
   return (
     <View style={styles.loginPromptBG}>
-      <View style={styles.loginPrompt}>
-        <Text style={styles.textCentered}>
-          <Text style={styles.textHeading}>
-            {userIsCreatingAccount
-              ? "Create An Account"
-              : "Log In"
-            }{"\n"}To Find Freeskaters Near You
-           </Text>
-          {"\n"}
-          <Text style={styles.textSub}>
-            This app uses secure Firebase authorization,{"\n"}and we will never share your information elsewhere.
-          </Text>
-          {"\n".repeat(2)}
-        </Text>
-        <CreateAccountForm/>
-        { userIsCreatingAccount
-          ? <CreateAccountButton doCreateAccount={ _doCreateAccount } styles={styles}/>
-          : <LoginButton doSignInUser={ _doSignInUser } styles={styles}/>
+      <View style={styles.loginPromptWindow}>
+        {headerText()}
+        {subText()}
+        {userIsCreatingAccount
+          ? <CreateAccountForm submitCreateAccount={submitCreateAccount}/>
+          : <LoginAccountForm submitLogin={submitLogin}/>
         }
         <SignInOrCreateAccountToggle styles={styles}/>
       </View>
@@ -188,26 +125,14 @@ function _LoginPrompt({
 }
 _LoginPrompt.propTypes = {
   userIsCreatingAccount: PropTypes.bool.isRequired,
-  username: PropTypes.object,
-  /*
-  email: PropTypes.string,
-  password: PropTypes.string,
-  password_copy: PropTypes.string,
-  */
   userLoggedIn: PropTypes.bool,
   window_dimensions: PropTypes.object,
 }
 
-
 export const LoginPrompt = connect(
   state => ({ 
     userIsCreatingAccount: componentSelector(state).login.userIsCreatingAccount,
-    username: componentSelector(state).login.username,
-    /*email: componentSelector(state).login.email,
-    password: componentSelector(state).login.password,
-    password_copy: componentSelector(state).login.password_copy,
-    */
-    userLoggedIn: userSelector(state).userLoggedIn,
+    userLoggedIn: currentUserSelector(state).userLoggedIn,
     window_dimensions: windowSelector(state),
   }),
   null

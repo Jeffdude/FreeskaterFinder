@@ -1,5 +1,6 @@
 import { firebase } from './firebase.js';
 import { loadUser, clearUser } from '../redux/actions.js';
+import * as helpers from './helpers.js';
 
 
 export function initUserListener(store){
@@ -32,26 +33,31 @@ export function createUser(email, password, username) {
       var errorMessage = error.message;
       switch(errorCode) {
         case 'auth/email-already-in-use':
-          console.error("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error] ", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/invalid-email':
-          console.error("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error] ", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/operation-not-allowed':
-          console.error("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error] ", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/weak-password':
-          console.error("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error] ", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         default:
-          console.error("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error] ", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
       }
     });
   return({success: true, message: null});
 }
 
-/**
+/*
  * @param {string} email
  * @param {string} password
  *
@@ -131,4 +137,3 @@ export function signOutUser() {
     return 1;
   }
 }
-

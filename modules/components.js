@@ -30,7 +30,7 @@ export function GenGenericInput(component_fullname){
     function changeText(text){
       setComponentState(category_name, component_name, {...component_state, text: text});
     }
-    console.log(props);
+    console.log("PROPS: ", props);
     return (
       <Input {...props}
         onChangeText={changeText}

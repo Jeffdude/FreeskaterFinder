@@ -12,11 +12,12 @@ import { LoginPrompt } from './components/login.js';
 import { TabSelector, TabDisplay } from './components/tabSelector.js';
 import { TestListList, TestListInput } from './components/testList.js';
 import { MainView } from './components/map_view.js';
+import * as helpers from './modules/helpers.js';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    firebase.database.enableLogging(true);
+    //firebase.database.enableLogging(true);
     /*
     let test_list_db = firebase.database().ref('/testlist')
     test_list_db.set([{key: 0, value: 'test'}]);

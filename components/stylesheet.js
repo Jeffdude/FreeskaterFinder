@@ -10,28 +10,49 @@ export function getStyles({width, height}){
       alignItems: 'center',
       justifyContent: 'center',
     },
-    loginPrompt: {
+    loginPromptWindow: {
       backgroundColor: "#ffffff",
+      borderRadius: 30,
+      padding:20,
       margin: "auto",  
       alignItems: 'center',
     },
-    loginInput: {
+    loginForm: {
+      width: width*0.8,
+      maxWidth: 400,
     },
-    loginInputError: {
+    loginHeaderTextView: {
+      maxWidth: 400,
+      width: width*0.8,
+    },
+    loginSubTextView: {
+      paddingTop: 10,
+      maxWidth: 350,
+      width: width*0.8,
+    },
+    loginInputField: {
+      height:40,
+    },
+    loginInputFieldError: {
     },
     textCentered: {
-      textAlign: "center",
     },
-    textHeading: {
+    loginTextHeading: {
+      maxWidth: 400,
       fontSize: 22,
       fontWeight: "bold",
+      textAlign: "center",
+    },
+    loginTextSub: {
+      fontSize: 14,
+      color: "#888",
+      textAlign: "center",
+    },
+    loginTextError: {
+      color: "#ff0000"
     },
     textClickable: {
       textDecorationLine: 'underline',
-    },
-    textSub: {
-      fontSize: 14,
-      color: "#888",
     },
     loginButtonRow: {
       flex: 1,
