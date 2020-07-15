@@ -22,7 +22,21 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber": "0.0.1",
+      "bundleIdentifier": "com.jmkride.freeskaterfinder",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAYdk_oXOcBAxUaI3gEsU67ommwk4L0JaY"
+      },
       "supportsTablet": true
+    },
+    "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCyp6YeE3EWu9s979rO7FenjJNsVUu5wNg"
+        }
+      },
+      "package": "com.jmkride.freeskaterfinder",
+      "versionCode": 0
     }
   }
 }

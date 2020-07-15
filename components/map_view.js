@@ -3,25 +3,30 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { currentUserSelector, windowSelector } from '../redux/selectors.js';
+import { StyleSheet} from 'react-native'
 import { getStyles } from './stylesheet.js';
 import MapView from 'react-native-maps';
 
 function _FFMapView({ userLoggedIn, current_user, window_dimensions }) {
   const styles = getStyles(window_dimensions);
   if(!userLoggedIn){
+    console.log("User is not logged in. Maps not loaded.");
     return (<></>);
   }
   return (
-    <View styles={styles.mapview}>
+    <View styles={{...styles.mapview, backgroundColor: "#00ff00"}}>
+    {/*
       <MapView
+        provider="google"
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        styles={styles.map}
+        styles={{flex:1}}
       />
+      */}
     </View>
   );
 }

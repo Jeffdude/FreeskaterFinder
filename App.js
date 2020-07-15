@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store.js';
 import { LoginPrompt } from './components/login.js';
 import { FFMapView } from './components/map_view.js';
+//import { firebase } from './modules/firebase.js';
 
 export default class App extends React.Component {
   constructor(props) {

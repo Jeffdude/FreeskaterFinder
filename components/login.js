@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback, Text, View } from 'react-native';
 import { createUser, signInUser } from '../modules/users.js';
 import { getStyles } from './stylesheet.js';
 import { connect } from 'react-redux';
@@ -108,17 +108,19 @@ function _LoginPrompt({
   }
 
   return (
-    <View style={styles.loginPromptBG}>
-      <View style={styles.loginPromptWindow}>
-        {headerText()}
-        {subText()}
-        {userIsCreatingAccount
-          ? <CreateAccountForm submitCreateAccount={submitCreateAccount}/>
-          : <LoginAccountForm submitLogin={submitLogin}/>
-        }
-        <SignInOrCreateAccountToggle styles={styles}/>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.loginPromptBG}>
+        <View style={styles.loginPromptWindow}>
+          {headerText()}
+          {subText()}
+          {userIsCreatingAccount
+            ? <CreateAccountForm submitCreateAccount={submitCreateAccount}/>
+            : <LoginAccountForm submitLogin={submitLogin}/>
+          }
+          <SignInOrCreateAccountToggle styles={styles}/>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 _LoginPrompt.propTypes = {

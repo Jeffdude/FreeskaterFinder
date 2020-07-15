@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleSheet } from 'react-native';
 
 export function getStyles({width, height}){
@@ -58,11 +59,7 @@ export function getStyles({width, height}){
       flex: 1,
       flexDirection: 'row',
     },
-    mapview: {
-      position: "absolute",  
-      width: "100%",
-      height: "100%",  
-    },
+    mapview: {...StyleSheet.absoluteFillObject },
     map: {},
     container: {
       flex: 1,
