@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Text, TextInput, View, Alert } from 'react-native';
-import { getUser, createUser, signInUser, userLoggedIn } from '../modules/users.js';
-import { Input } from 'react-native-elements';
+import { Text, View } from 'react-native';
+import { createUser, signInUser } from '../modules/users.js';
 import { getStyles } from './stylesheet.js';
 import { connect } from 'react-redux';
 import { setComponentState } from '../redux/actions.js';
@@ -42,7 +41,6 @@ const SignInOrCreateAccountToggle = connect(
 
 function _LoginPrompt({ 
   userIsCreatingAccount,
-  username,
   userLoggedIn,
   window_dimensions,
 }){
@@ -66,7 +64,7 @@ function _LoginPrompt({
       setSubmitting(false);
       return;
     }
-    const {success, message} = createUser(email, password, username, createAlert)
+    const {success, message} = createUser(email, password, username)
     if (success) {
       console.log("User successfully created!")
     } else {

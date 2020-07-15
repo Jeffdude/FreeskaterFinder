@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { Input } from 'react-native-elements';
 import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import { windowSelector } from '../redux/selectors.js';
 import { getStyles } from './stylesheet.js';
@@ -37,7 +37,6 @@ function _LoginAccountForm({
         handleChange,
         handleSubmit,
         values,
-        errors,
         isValid,
         isSubmitting,
         handleBlur,

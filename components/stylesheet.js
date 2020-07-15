@@ -58,10 +58,12 @@ export function getStyles({width, height}){
       flex: 1,
       flexDirection: 'row',
     },
-    mainview: {
-      alignItems: 'center',
-      justifyContent: 'center',
+    mapview: {
+      position: "absolute",  
+      width: "100%",
+      height: "100%",  
     },
+    map: {},
     container: {
       flex: 1,
       backgroundColor: '#fff',

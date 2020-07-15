@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { Input } from 'react-native-elements';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { getStyles } from './stylesheet.js';
 import { connect } from 'react-redux';
 import { windowSelector } from '../redux/selectors.js';
-import { usernameAvailable } from '../modules/users.js';
 
 
 const validationSchema = Yup.object().shape({
@@ -48,7 +47,6 @@ function _CreateAccountForm({
         handleChange,
         handleSubmit,
         values,
-        errors,
         isValid,
         isSubmitting,
         handleBlur,

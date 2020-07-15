@@ -1,18 +1,12 @@
 import React from 'react';
 import { registerRootComponent } from 'expo';
-import { Text, View, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { initUserListener } from './modules/users.js';
-import { firebase, linkTestList } from './modules/firebase.js';
-import styles from './components/stylesheet.js';
 import { setWindowDimensions } from './redux/actions.js';
-import { NAVIGATION_TABS } from './constants.js';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
 import { LoginPrompt } from './components/login.js';
-import { TabSelector, TabDisplay } from './components/tabSelector.js';
-import { TestListList, TestListInput } from './components/testList.js';
-import { MainView } from './components/map_view.js';
-import * as helpers from './modules/helpers.js';
+import { FFMapView } from './components/map_view.js';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,7 +23,7 @@ export default class App extends React.Component {
 
      * const unlink = linkTestList(firebase.database(), store);
     */
-    firebase.auth().signOut();
+    //firebase.auth().signOut();
     initUserListener(store);
     store.dispatch(
       setWindowDimensions(
@@ -55,7 +49,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}> 
         <LoginPrompt/>
-        <MainView/>
+        <FFMapView/>
         {/*
         <TabSelector/>
         <TabDisplay/>
