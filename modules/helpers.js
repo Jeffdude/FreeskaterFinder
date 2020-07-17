@@ -14,7 +14,7 @@ export function createAlert(alertMainText, alertSubText) {
     alertMainText,
     alertSubText,
     [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
+      { text: "OK", onPress: () => console.log("Alert dismissed.") }
     ],
     { cancelable: false }
   );
@@ -22,10 +22,10 @@ export function createAlert(alertMainText, alertSubText) {
 
 export function getDeviceType() {
   switch(Device.brand){
-    case "Google":
+    case "google":
     case "xiami":
       return "android";
-    case "Apple":
+    case "apple":
       return "ios";
     case null:
       return "web";

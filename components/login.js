@@ -9,6 +9,7 @@ import {
   componentSelector,
   currentUserSelector,
   windowSelector,
+  navigationSelector,
 } from '../redux/selectors.js';
 import { CreateAccountForm } from './create_account_form.js';
 import { LoginAccountForm } from './login_form.js';
@@ -45,9 +46,8 @@ function _LoginPrompt({
   window_dimensions,
 }){
   const styles = getStyles(window_dimensions);
-
   if(userLoggedIn){
-    return null;
+    return (<></>);
   }
 
   function submitCreateAccount(
@@ -70,16 +70,20 @@ function _LoginPrompt({
     } else {
       console.error("[Create User] Wah wah :(", message)
     }
+    setSubmitting(false);
+    return;
   }
 
-  function submitLogin({ email, password }) {
+  function submitLogin({ email, password }, { setSubmitting }) {
     console.log("Signing user in with email: ", email);
     const {success, message} = signInUser(email, password)
     if (success) {
       console.log("[Sign In User] User successfully logged in");
     } else {
-      console.error("[Sign In User] Wah wah :(", message)
+      console.log("[Sign In User] Wah wah :(", message)
     }
+    setSubmitting(false);
+    return;
   }
 
   function headerText() {
@@ -135,5 +139,5 @@ export const LoginPrompt = connect(
     userLoggedIn: currentUserSelector(state).userLoggedIn,
     window_dimensions: windowSelector(state),
   }),
-  null
+  null,
 )(_LoginPrompt);

@@ -33,23 +33,23 @@ export function createUser(email, password, username) {
       var errorMessage = error.message;
       switch(errorCode) {
         case 'auth/email-already-in-use':
-          console.log("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error]", errorMessage);
           helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/invalid-email':
-          console.log("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error]", errorMessage);
           helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/operation-not-allowed':
-          console.log("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error]", errorMessage);
           helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/weak-password':
-          console.log("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error]", errorMessage);
           helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         default:
-          console.log("[Create Account Error] ", errorMessage);
+          console.log("[Create Account Error]", errorMessage);
           helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
       }
@@ -71,19 +71,24 @@ export function signInUser(email, password) {
       var errorMessage = error.message;
       switch(errorCode) {
         case 'auth/invalid-email':
-          console.error("[Sign In Error] ", errorMessage);
+          console.log("[Sign In Error]", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/user-disabled':
-          console.error("[Sign In Error] ", errorMessage);
+          console.log("[Sign In Error]", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/user-not-found':
-          console.error("[Sign In Error] ", errorMessage);
+          console.log("[Sign In Error]", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         case 'auth/wrong-password':
-          console.error("[Sign In Error] ", errorMessage);
+          console.log("[Sign In Error]", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
         default:
-          console.error("[Sign In Error] ", errorMessage);
+          console.log("[Sign In Error]", errorMessage);
+          helpers.createAlert(errorMessage);
           return({success: false, message: errorMessage});
       }
     }

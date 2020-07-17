@@ -2,12 +2,14 @@ import React from 'react';
 import { registerRootComponent } from 'expo';
 import { Dimensions } from 'react-native';
 import { initUserListener } from './modules/users.js';
-import { setWindowDimensions } from './redux/actions.js';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
+import { setWindowDimensions } from './redux/actions.js';
+import { windowSelector } from './redux/selectors.js';
 import { LoginPrompt } from './components/login.js';
 import { FFMapView } from './components/map_view.js';
-//import { firebase } from './modules/firebase.js';
+import { firebase } from './modules/firebase.js';
+import Constants from 'expo-constants';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -24,6 +26,10 @@ export default class App extends React.Component {
 
      * const unlink = linkTestList(firebase.database(), store);
     */
+    console.ignoredYellowBox = [
+      'Setting a timer'
+    ];
+    console.log("Manifest:", JSON.stringify(Constants.manifest));
     //firebase.auth().signOut();
     initUserListener(store);
     store.dispatch(
@@ -36,12 +42,21 @@ export default class App extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', () => {
-      store.dispatch(
-        setWindowDimensions(
-          Dimensions.get('window').width,
-          Dimensions.get('window').height,
-        )
-      );
+      if( 
+        windowSelector(store.getState()).window_dimensions == {
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height,
+        }
+      ){
+        return;
+      } else {
+        store.dispatch(
+          setWindowDimensions(
+            Dimensions.get('window').width,
+            Dimensions.get('window').height,
+          )
+        );
+      }
     });
   }
 
@@ -49,8 +64,9 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}> 
-        <LoginPrompt/>
         <FFMapView/>
+      {//<LoginPrompt/>
+      }
         {/*
         <TabSelector/>
         <TabDisplay/>

@@ -39,7 +39,6 @@ export const setWindowDimensions = (width, height) => ({
 });
 
 
-
 /* 
  * Testing and debug stuff
  */

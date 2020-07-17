@@ -61,6 +61,25 @@ export function getStyles({width, height}){
     },
     mapview: {...StyleSheet.absoluteFillObject },
     map: {},
+    mapcontainer: {
+      position: "absolute",  
+      width: "100%",
+      height: "100%",  
+      backgroundColor: "rgba(0,0,0, 0.5)",  
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    mapStyle: {
+      /*
+      width: width,
+      height: height,
+      */
+      top: 0, 
+      left: 0, 
+      right: 0, 
+      bottom: 0, 
+      position: 'absolute'
+    },
     container: {
       flex: 1,
       backgroundColor: '#fff',
