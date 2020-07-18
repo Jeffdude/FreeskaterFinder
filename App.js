@@ -1,6 +1,6 @@
 import React from 'react';
 import { registerRootComponent } from 'expo';
-import { Dimensions } from 'react-native';
+import { View, Dimensions, YellowBox  } from 'react-native';
 import { initUserListener } from './modules/users.js';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
@@ -26,9 +26,9 @@ export default class App extends React.Component {
 
      * const unlink = linkTestList(firebase.database(), store);
     */
-    console.ignoredYellowBox = [
+    YellowBox.ignoreWarnings([
       'Setting a timer'
-    ];
+    ]);
     console.log("Manifest:", JSON.stringify(Constants.manifest));
     //firebase.auth().signOut();
     initUserListener(store);
@@ -64,9 +64,8 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}> 
+        <LoginPrompt/>
         <FFMapView/>
-      {//<LoginPrompt/>
-      }
         {/*
         <TabSelector/>
         <TabDisplay/>

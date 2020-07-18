@@ -14,26 +14,19 @@ import MapView from 'react-native-maps';
 function _FFMapView({ userLoggedIn, current_user, window_dimensions }) {
   const styles = getStyles(window_dimensions);
   if(!userLoggedIn){
-    console.log("User is not logged in. Maps not loaded.");
     return (<></>);
   }
-  console.log("User is logged in. Maps loaded.");
   return (
-    <View>
-      <View styles={styles.mapcontainer}>
-        <View styles={{backgroundColor: "red", flex: 1}}/>
-        {/*
-        <MapView
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          styles={styles.mapStyle}
-        />
-       */ }
-      </View>
+    <View style={styles.mapcontainer}>
+      <MapView
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        style={styles.mapStyle}
+      />
     </View>
   );
 }
