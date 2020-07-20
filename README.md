@@ -1,6 +1,7 @@
 # FreeskaterFinder
 
-## Goal: To connect our freeskate family in the real world, and create a safe,
+## Goal: 
+  To connect our freeskate family in the real world, and create a safe,
 inviting venue for others to learn and be introduced to freeskating.
 
 ## TODO:

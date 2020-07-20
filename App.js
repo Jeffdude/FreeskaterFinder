@@ -1,6 +1,7 @@
 import React from 'react';
 import { registerRootComponent } from 'expo';
 import { View, Dimensions, YellowBox  } from 'react-native';
+import Constants from 'expo-constants';
 import { initUserListener } from './modules/users.js';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
@@ -8,8 +9,11 @@ import { setWindowDimensions } from './redux/actions.js';
 import { windowSelector } from './redux/selectors.js';
 import { LoginPrompt } from './components/login.js';
 import { FFMapView } from './components/map_view.js';
+import { FFSettings } from './components/settings.js';
 import { firebase } from './modules/firebase.js';
-import Constants from 'expo-constants';
+
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -62,16 +66,16 @@ export default class App extends React.Component {
 
 
   render() {
+    const Drawer = createDrawerNavigator();
     return (
       <Provider store={store}> 
         <LoginPrompt/>
-        <FFMapView/>
-        {/*
-        <TabSelector/>
-        <TabDisplay/>
-        <TestListList/>
-        <TestListInput/>
-        */}
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Settings">
+            <Drawer.Screen name="Map" component={FFMapView}/>
+            <Drawer.Screen name="Settings" component={FFSettings}/>
+          </Drawer.Navigator>
+        </NavigationContainer>
       </Provider> 
     );
   }
