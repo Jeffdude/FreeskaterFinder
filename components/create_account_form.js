@@ -4,7 +4,7 @@ import { Button, Text, View } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { getStyles } from './stylesheet.js';
+import styles from './stylesheet.js';
 import { connect } from 'react-redux';
 import { windowSelector } from '../redux/selectors.js';
 
@@ -28,10 +28,7 @@ const validationSchema = Yup.object().shape({
 
 function _CreateAccountForm({
   submitCreateAccount,
-  window_dimensions,
 }) {
-  const styles = getStyles(window_dimensions);
-
   return (
     <Formik
       initialValues={{
@@ -120,10 +117,7 @@ function _CreateAccountForm({
 }
 _CreateAccountForm.propTypes = {
   submitCreateAccount: PropTypes.func.isRequired,
-  window_dimensions: PropTypes.object.isRequired,
 };
 export const CreateAccountForm = connect(
-  state => ({ 
-    window_dimensions: windowSelector(state),
-  }),
+  null,
 )(_CreateAccountForm);

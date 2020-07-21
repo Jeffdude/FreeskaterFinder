@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Keyboard, TouchableWithoutFeedback, Text, View } from 'react-native';
 import { createUser, signInUser } from '../modules/users.js';
-import { getStyles } from './stylesheet.js';
+import styles from './stylesheet.js';
 import { connect } from 'react-redux';
 import { setComponentState } from '../redux/actions.js';
 import { 
@@ -43,9 +43,7 @@ const SignInOrCreateAccountToggle = connect(
 function _LoginPrompt({ 
   userIsCreatingAccount,
   userLoggedIn,
-  window_dimensions,
 }){
-  const styles = getStyles(window_dimensions);
   if(userLoggedIn){
     return (<></>);
   }
@@ -130,14 +128,12 @@ function _LoginPrompt({
 _LoginPrompt.propTypes = {
   userIsCreatingAccount: PropTypes.bool.isRequired,
   userLoggedIn: PropTypes.bool,
-  window_dimensions: PropTypes.object,
 }
 
 export const LoginPrompt = connect(
   state => ({ 
     userIsCreatingAccount: componentSelector(state).login.userIsCreatingAccount,
     userLoggedIn: currentUserSelector(state).userLoggedIn,
-    window_dimensions: windowSelector(state),
   }),
   null,
 )(_LoginPrompt);

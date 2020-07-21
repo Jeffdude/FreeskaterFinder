@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { Formik, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import { windowSelector } from '../redux/selectors.js';
-import { getStyles } from './stylesheet.js';
+import styles from './stylesheet.js';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -18,12 +18,7 @@ const validationSchema = Yup.object().shape({
     .required(),
 });
 
-function _LoginAccountForm({
-  submitLogin,
-  window_dimensions,
-}){
-  const styles = getStyles(window_dimensions);
-
+function _LoginAccountForm({submitLogin}){
   return (
     <Formik
       initialValues={{
@@ -82,10 +77,8 @@ function _LoginAccountForm({
 }
 _LoginAccountForm.propTypes = {
   submitLogin: PropTypes.func.isRequired,
-  window_dimensions: PropTypes.object.isRequired,
 }
 export const LoginAccountForm = connect(
-  state => ({
-    window_dimensions: windowSelector(state),
-  }),
+  null,
+  null,
 )(_LoginAccountForm);

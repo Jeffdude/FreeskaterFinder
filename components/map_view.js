@@ -8,11 +8,10 @@ import {
   navigationSelector
 } from '../redux/selectors.js';
 import { StyleSheet} from 'react-native'
-import { getStyles } from './stylesheet.js';
+import styles from './stylesheet.js';
 import MapView from 'react-native-maps';
 
-function _FFMapView({ userLoggedIn, current_user, window_dimensions }) {
-  const styles = getStyles(window_dimensions);
+function _FFMapView({ userLoggedIn, current_user }) {
   if(!userLoggedIn){
     return (<></>);
   }
@@ -33,14 +32,12 @@ function _FFMapView({ userLoggedIn, current_user, window_dimensions }) {
 _FFMapView.propTypes = {
   userLoggedIn: PropTypes.bool,
   current_user: PropTypes.object,
-  window_dimensions: PropTypes.object,
 }
 
 export const FFMapView = connect(
   state => ({
     current_user: currentUserSelector(state).currentUser,
     userLoggedIn: currentUserSelector(state).userLoggedIn,
-    window_dimensions: windowSelector(state),
   }),
   null,
 )(_FFMapView);
