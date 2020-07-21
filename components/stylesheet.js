@@ -68,6 +68,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  drawerToggle: {
+   width: 44,
+   height: 44,
+   borderRadius: 22,
+   backgroundColor: "#00a0db",
+  },
   mapStyle: {
     /*
     width: Dimensions.get('window').width,
