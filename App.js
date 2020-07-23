@@ -70,12 +70,9 @@ export default class FFApp extends React.Component {
 
 
   render() {
-    const navigation_ref = React.useRef(null);
     return (
       <Provider store={store}> 
-        <NavigationContainer ref={navigation_ref}>
-          <AppAuthSwitcher/>
-        </NavigationContainer>
+        <AppAuthSwitcher/>
       </Provider> 
     );
   }
@@ -89,11 +86,15 @@ function _AppAuthSwitcher({ navigation, userLoggedIn }){
     return <FFLoginPrompt/>;
   }
 
+  const navigation_ref = React.useRef(null);
+
   return (
-    <Drawer.Screen name="Map" component={FFMapView}/>
-    <Stack.Navigator>
-      <Drawer.Screen name="Settings" component={FFSettings}/>
-    </Stack.Navigator>
+    <NavigationContainer ref={navigation_ref}>
+      <Drawer.Screen name="Map" component={FFMapView}/>
+      <Stack.Navigator>
+        <Drawer.Screen name="Settings" component={FFSettings}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 const AppAuthSwitcher = connect(
