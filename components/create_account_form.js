@@ -118,6 +118,4 @@ function _CreateAccountForm({
 _CreateAccountForm.propTypes = {
   submitCreateAccount: PropTypes.func.isRequired,
 };
-export const CreateAccountForm = connect(
-  null,
-)(_CreateAccountForm);
+export const CreateAccountForm = connect()(_CreateAccountForm);

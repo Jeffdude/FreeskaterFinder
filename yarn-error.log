@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-reanimated@~1.7.0
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-redux-firebase
 
 PATH: 
   C:\Program Files\Java\jre1.8.0_251\bin;C:\Program Files (x86)\Yarn\bin;node_modules\.bin;C:\Users\jeffm\AppData\Local\Android\Sdk\emulator;C:\Users\jeffm\AppData\Local\Android\Sdk\platform-tools;C:\Users\jeffm\.babun\cygwin\home\jeffm\.local\bin;C:\Users\jeffm\.babun\cygwin\home\jeffm\.local\bin;C:\Program Files (x86)\Yarn\bin;node_modules\.bin;C:\Users\jeffm\AppData\Local\Android\Sdk\emulator;C:\Users\jeffm\AppData\Local\Android\Sdk\platform-tools;C:\Users\jeffm\.babun\cygwin\home\jeffm\.local\bin;C:\Users\jeffm\.babun\cygwin\home\jeffm\.local\bin;C:\Users\jeffm\.babun\cygwin\usr\local\bin;C:\Users\jeffm\.babun\cygwin\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files\Oculus\Support\oculus-runtime;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Calibre2;C:\Program Files (x86)\QuickTime\QTSystem;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\PuTTY;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Users\jeffm\AppData\Local\Microsoft\WindowsApps;C:\Users\jeffm\Documents\ffmpeg\bin;C:\Users\jeffm\.babun;C:\Users\jeffm\AppData\Roaming\npm;C:\Users\jeffm\AppData\Local\Yarn\bin
@@ -27,8 +27,10 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
+      "@react-native-community/masked-view": "0.1.6",
       "@react-navigation/drawer": "^5.8.6",
       "@react-navigation/native": "^5.7.1",
+      "@react-navigation/stack": "^5.7.1",
       "expo": "~37.0.3",
       "expo-constants": "~9.0.0",
       "expo-device": "~2.1.0",
@@ -42,6 +44,7 @@ npm manifest:
       "react-native-elements": "^2.0.2",
       "react-native-gesture-handler": "~1.6.0",
       "react-native-maps": "0.26.1",
+      "react-native-reanimated": "~1.7.0",
       "react-native-safe-area-context": "0.7.3",
       "react-native-screens": "~2.2.0",
       "react-native-vector-icons": "^6.6.0",
@@ -1511,6 +1514,11 @@ Lockfile:
       wcwidth "^1.0.1"
       ws "^1.1.0"
   
+  "@react-native-community/masked-view@0.1.6":
+    version "0.1.6"
+    resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.6.tgz#c7f2ac187c1f25aa8c30d11baa8f4398eca3bb84"
+    integrity sha512-PpMoeXwPUoldCRKDuSi+zK5rT+sJTW6ri6RdGPkSKRzU77Q1d9IaR0O5IKvBj0XSdL3p+dcOa05gk35aGDffBQ==
+  
   "@react-navigation/core@^3.7.6":
     version "3.7.6"
     resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.7.6.tgz#e0244fcdc22937825b252197f70308bbe5709c58"
@@ -1563,6 +1571,14 @@ Lockfile:
     integrity sha512-dYD5qrIKUmuBEp+O98hB0tDYpEsGQgCQFQgMEoFKBmVVhx2JnJJ1zxRjU7xWcCU4VdBA8IOowgHQHJsVNKYyrg==
     dependencies:
       nanoid "^3.1.9"
+  
+  "@react-navigation/stack@^5.7.1":
+    version "5.7.1"
+    resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.7.1.tgz#847b4f7087a87e01086e5e09f49111e42319abde"
+    integrity sha512-Gbzimr3ZkEpTge44J2/jkEkSKQ/R+wcHT7XPfukhItTm+p3jMD9RcqoshWJaUdWG93wDOHPm4BgbhQmuSgCLWA==
+    dependencies:
+      color "^3.1.2"
+      react-native-iphone-x-helper "^1.2.1"
   
   "@sindresorhus/is@^0.14.0":
     version "0.14.0"
@@ -6542,6 +6558,13 @@ Lockfile:
     dependencies:
       lodash "^4.17.4"
       prop-types "^15.5.10"
+  
+  react-native-reanimated@~1.7.0:
+    version "1.7.1"
+    resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.1.tgz#6363c7f3ebbabc56a05d5dccaf09d95f3b6a2d69"
+    integrity sha512-aBwhoQdH4shkeTPbi7vKcAwYOzBp/6zElEKuIOgby11TceoM7y5SgNImC3HbDWWld3QV2PA2AgQGwAy51WgF3Q==
+    dependencies:
+      fbjs "^1.0.0"
   
   react-native-safe-area-context@0.7.3:
     version "0.7.3"

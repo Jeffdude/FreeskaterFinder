@@ -40,7 +40,7 @@ const SignInOrCreateAccountToggle = connect(
   { setComponentState },
 )(_SignInOrCreateAccountToggle);
 
-function _LoginPrompt({ 
+function _FFLoginPrompt({ 
   userIsCreatingAccount,
   userLoggedIn,
 }){
@@ -125,15 +125,15 @@ function _LoginPrompt({
     </TouchableWithoutFeedback>
   );
 }
-_LoginPrompt.propTypes = {
+_FFLoginPrompt.propTypes = {
   userIsCreatingAccount: PropTypes.bool.isRequired,
   userLoggedIn: PropTypes.bool,
 }
 
-export const LoginPrompt = connect(
+export const FFLoginPrompt = connect(
   state => ({ 
     userIsCreatingAccount: componentSelector(state).login.userIsCreatingAccount,
     userLoggedIn: currentUserSelector(state).userLoggedIn,
   }),
   null,
-)(_LoginPrompt);
+)(_FFLoginPrompt);

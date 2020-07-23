@@ -2,20 +2,25 @@ import React from 'react';
 import { registerRootComponent } from 'expo';
 import { View, Dimensions, YellowBox  } from 'react-native';
 import Constants from 'expo-constants';
+
+import { connect } from 'react-redux';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+
 import { initUserListener } from './modules/users.js';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
 import { setWindowDimensions } from './redux/actions.js';
-import { windowSelector } from './redux/selectors.js';
-import { LoginPrompt } from './components/login.js';
+import { windowSelector, currentUserSelector } from './redux/selectors.js';
+import { FFLoginPrompt } from './components/login.js';
 import { FFMapView } from './components/map_view.js';
 import { FFSettings } from './components/settings.js';
+import { FFDrawerToggle } from './components/drawer_toggle.js';
 import { firebase } from './modules/firebase.js';
 
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-
-export default class App extends React.Component {
+export default class FFApp extends React.Component {
   constructor(props) {
     super(props);
     //firebase.database.enableLogging(true);
@@ -33,7 +38,6 @@ export default class App extends React.Component {
     YellowBox.ignoreWarnings([
       'Setting a timer'
     ]);
-    console.log("Manifest:", JSON.stringify(Constants.manifest));
     //firebase.auth().signOut();
     initUserListener(store);
     store.dispatch(
@@ -42,6 +46,7 @@ export default class App extends React.Component {
         Dimensions.get('window').height,
       )
     );
+    this.state = {isReady: false};
   }
 
   componentDidMount() {
@@ -66,19 +71,36 @@ export default class App extends React.Component {
 
 
   render() {
-    const Drawer = createDrawerNavigator();
     return (
       <Provider store={store}> 
-        <LoginPrompt/>
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Settings">
-            <Drawer.Screen name="Map" component={FFMapView}/>
-            <Drawer.Screen name="Settings" component={FFSettings}/>
-          </Drawer.Navigator>
+          <AppAuthSwitcher/>
         </NavigationContainer>
       </Provider> 
     );
   }
 }
 
-registerRootComponent(App);
+function _AppAuthSwitcher({ navigation, userLoggedIn }){
+  const SettingStack = createStackNavigator();
+  const AppDrawer = createDrawerNavigator();
+
+  if (!userLoggedIn) {
+    return <FFLoginPrompt/>;
+  }
+
+  return (
+    <Drawer.Screen name="Map" component={FFMapView}/>
+    <Stack.Navigator>
+      <Drawer.Screen name="Settings" component={FFSettings}/>
+    </Stack.Navigator>
+  );
+}
+const AppAuthSwitcher = connect(
+  state => ({
+    userLoggedIn: currentUserSelector(state).userLoggedIn,
+  }),
+  null,
+)(_AppAuthSwitcher);
+
+registerRootComponent(FFApp);

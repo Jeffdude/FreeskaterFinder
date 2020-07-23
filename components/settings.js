@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { useIsDrawerOpen } from '@react-navigation/drawer';
+import { Button, View, Text } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 
 export function FFSettings({navigation}){
-  const isDrawerOpen = useIsDrawerOpen();
   return (
     <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text> Settings page. {isDrawerOpen ? "Open" : "Closed"} </Text>
-
+      <Text> Settings page. </Text>
+      <Button 
+        title="Go To Map"
+        onPress={() => navigation.dispatch(StackActions.replace('Map'))}
+      />
     </View>
   );
 }
