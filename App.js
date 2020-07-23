@@ -46,7 +46,6 @@ export default class FFApp extends React.Component {
         Dimensions.get('window').height,
       )
     );
-    this.state = {isReady: false};
   }
 
   componentDidMount() {
@@ -71,9 +70,10 @@ export default class FFApp extends React.Component {
 
 
   render() {
+    const navigation_ref = React.useRef(null);
     return (
       <Provider store={store}> 
-        <NavigationContainer>
+        <NavigationContainer ref={navigation_ref}>
           <AppAuthSwitcher/>
         </NavigationContainer>
       </Provider> 
